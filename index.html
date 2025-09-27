@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizvana - Remove Confusion. Build Clarity. Learn.</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Futuristic Effects -->
+    <div class="futuristic-bg">
+        <!-- Holographic Grid -->
+        <div class="holo-grid"></div>
+        
+        <!-- Energy Orbs -->
+        <div class="energy-orb orb1"></div>
+        <div class="energy-orb orb2"></div>
+        <div class="energy-orb orb3"></div>
+        <div class="energy-orb orb4"></div>
+        
+        <!-- Laser Beams -->
+        <div class="laser-beam beam1"></div>
+        <div class="laser-beam beam2"></div>
+        <div class="laser-beam beam3"></div>
+        
+        <!-- Hologram Particles -->
+        <div class="holo-particles">
+            <div class="holo-dot" style="top: 15%; left: 25%; animation-delay: 0s;"></div>
+            <div class="holo-dot" style="top: 35%; left: 75%; animation-delay: -1s;"></div>
+            <div class="holo-dot" style="top: 55%; left: 45%; animation-delay: -2s;"></div>
+            <div class="holo-dot" style="top: 75%; left: 85%; animation-delay: -3s;"></div>
+            <div class="holo-dot" style="top: 25%; right: 30%; animation-delay: -4s;"></div>
+            <div class="holo-dot" style="top: 85%; right: 65%; animation-delay: -5s;"></div>
+        </div>
+        
+        <!-- Quantum Waves -->
+        <div class="quantum-wave wave1"></div>
+        <div class="quantum-wave wave2"></div>
+    </div>
+
+    
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="logo">🧠 Quizvana</h1>
+            <div class="stats">
+                <div class="stat">
+                    <span class="label">XP</span>
+                    <span class="value" id="xp">0</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Streak</span>
+                    <span class="value" id="streak">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Menu -->
+        <div id="menu" class="screen active">
+            <div class="menu-content">
+                <h2>Remove Confusion. Build Clarity. Learn.</h2>
+                <div class="category-selector">
+                    <h3>Choose Category:</h3>
+                    <select id="category-select" class="category-dropdown">
+                        <option value="mixed">🎯 Mixed Questions</option>
+                        <option value="9">📚 General Knowledge</option>
+                        <option value="17">🧪 Science & Nature</option>
+                        <option value="21">⚽ Sports</option>
+                        <option value="23">📜 History</option>
+                        <option value="11">🎬 Movies</option>
+                    </select>
+                </div>
+                <div class="upload-section">
+                    <h3>📄 Create Custom Quiz</h3>
+                    <div class="input-tabs">
+                        <button class="tab-btn active" onclick="switchTab('file')">Upload File</button>
+                        <button class="tab-btn" onclick="switchTab('text')">Enter Summary</button>
+                    </div>
+                    
+                    <div id="file-tab" class="tab-content active">
+                        <input type="file" id="file-upload" accept=".txt,.pdf,.docx" class="file-input">
+                        <label for="file-upload" class="file-label">Choose File</label>
+                        <button class="btn secondary" onclick="generateFromFile()">Generate from File</button>
+                    </div>
+                    
+                    <div id="text-tab" class="tab-content">
+                        <textarea id="summary-input" placeholder="Enter your summary or text content here..." class="summary-textarea"></textarea>
+                        <button class="btn secondary" onclick="generateFromSummary()">Generate from Summary</button>
+                    </div>
+                </div>
+                <div class="menu-buttons">
+                    <button class="btn primary" onclick="startQuiz()">Start Quiz</button>
+                    <button class="btn secondary" onclick="showStats()">Stats & Badges</button>
+                    <button class="btn secondary" onclick="showSettings()">Settings</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz" class="screen">
+            <div class="quiz-header">
+                <div class="progress-ring">
+                    <svg class="progress-svg">
+                        <circle class="progress-bg" cx="30" cy="30" r="25"></circle>
+                        <circle class="progress-bar" cx="30" cy="30" r="25" id="progress-circle"></circle>
+                    </svg>
+                    <span class="question-number" id="question-num">1/10</span>
+                </div>
+                <div class="timer-bar">
+                    <div class="timer-fill" id="timer-fill"></div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <h3 class="question" id="question-text">Loading question...</h3>
+                <div class="answers" id="answers"></div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results" class="screen">
+            <div class="results-content">
+                <h2>Quiz Complete!</h2>
+                <div id="new-badge" class="badge-notification" style="display:none;">
+                    <div class="badge-content">
+                        <span class="badge-icon" id="badge-icon">🏆</span>
+                        <span class="badge-text">New Badge Unlocked!</span>
+                        <span class="badge-name" id="badge-name"></span>
+                    </div>
+                </div>
+                <div class="score-display">
+                    <div class="score-circle">
+                        <span class="score-text" id="final-score">0</span>
+                        <span class="score-label">Score</span>
+                    </div>
+                </div>
+                <div class="results-stats">
+                    <div class="result-stat">
+                        <span class="result-label">XP Gained</span>
+                        <span class="result-value" id="xp-gained">+0</span>
+                    </div>
+                    <div class="result-stat">
+                        <span class="result-label">Accuracy</span>
+                        <span class="result-value" id="accuracy">0%</span>
+                    </div>
+                </div>
+                <button class="btn primary" onclick="backToMenu()">Play Again</button>
+            </div>
+        </div>
+
+        <!-- Stats Modal -->
+        <div id="stats-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeStats()">&times;</span>
+                <h2>Your Progress</h2>
+                <div class="badges-section">
+                    <h3>🏆 Badges Earned</h3>
+                    <div class="badges-grid" id="badges-grid"></div>
+                </div>
+                <div class="stats-section">
+                    <div class="stat-item">
+                        <span class="stat-label">Total XP</span>
+                        <span class="stat-value" id="total-xp">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Games Played</span>
+                        <span class="stat-value" id="games-played">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Best Streak</span>
+                        <span class="stat-value" id="best-streak">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
